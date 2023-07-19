@@ -1,7 +1,3 @@
-//
-// Created by ziya on 22-6-26.
-//
-
 #include "../../include/asm/io.h"
 #include "../../include/linux/tty.h"
 #include "../../include/string.h"
