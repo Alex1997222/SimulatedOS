@@ -53,7 +53,7 @@ void idt_init() {
         p->offset0 = handler & 0xffff;
         p->offset1 = (handler >> 16) & 0xffff;
         p->selector = 1 << 3;
-        p->reserved = 0;      /
+        p->reserved = 0;      
         p->type = 0b1110;     // interrupt gate
         p->segment = 0;       // system seg
         p->DPL = (0x80 == i)? 3 : 0;
