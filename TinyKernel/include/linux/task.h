@@ -80,7 +80,6 @@ typedef union task_union_t {
 task_t* create_task(char* name, task_fun_t fun, int priority);
 void task_init();
 
-// 参数位置不可变，head.asm中有调用
 void task_exit(int code, task_t* task);
 void current_task_exit(int code);
 
