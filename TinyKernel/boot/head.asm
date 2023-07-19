@@ -4,49 +4,49 @@ extern kernel_main
 
 global _start
 _start:
-; 配置8259a芯片，响应中断用
+; set 8259a chip and enable interruption
 .config_8a59a:
-    ; 向主发送ICW1
+    ; send ICW1 to master chip
     mov al, 11h
     out 20h, al
 
-    ; 向从发送ICW1
+    ; send ICW1 to slave chip
     out 0a0h, al
 
-    ; 向主发送ICW2
+    ; send ICW2 to master chip
     mov al, 20h
     out 21h, al
 
-    ; 向从发送ICW2
+    ; send ICW2 to slave chip
     mov al, 28h
     out 0a1h, al
 
-    ; 向主发送ICW3
+    ; send ICW3 to master chip
     mov al, 04h
     out 21h, al
 
-    ; 向从发送ICW3
+    ; send ICW3 to master chip
     mov al, 02h
     out 0A1h , al
 
-    ; 向主发送ICW4
+    ; send ICW4 to master chip
     mov al, 003h
     out 021h, al
 
-    ; 向从发送ICW4
+    ; send ICW4 to slave chip
     out 0A1h, al
-
-    ; 屏蔽所有中断，只接收键盘中断
+ 
+    ;Mask all interrupts, only receive keyboard interrupts
 .enable_8259a_main:
     mov al, 11111000b
     out 21h, al
 
-    ; 屏蔽从芯片所有中断响应
+    ; disable interruptions from slave chip
 .disable_8259a_slave:
     mov al, 00111111b
     out 0A1h, al
 
-    ; 调用c程序
+    ; call C program
 .enter_c_word:
     call kernel_main
 

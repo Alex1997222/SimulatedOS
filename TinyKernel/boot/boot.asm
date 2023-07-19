@@ -50,39 +50,38 @@ read_hd:
     out dx, al
 
     ; 0x1f6 8bit
-    ; 0-3 位iba地址的24-27
-    ; 4 0表示主盘 1表示从盘
-    ; 5、7位固定为1
-    ; 6 0表示CHS模式，1表示LAB模式
+    ; 0-3 24-27 of iba address
+    ; 4 0 as master disk, 1 as slave disk
+    ; 5、7 is fixed to 1
+    ; 6 0 represent CHS mode，1 represent LAB mode
     inc dx
     shr ecx, 8
     and cl, 0b1111
-    mov al, 0b1110_0000     ; LBA模式
+    mov al, 0b1110_0000     ; LBA mode
     or al, cl
     out dx, al
 
-    ; 0x1f7 8bit  命令或状态端口
+    ; 0x1f7 8bit  command or status port
     inc dx
     mov al, 0x20
     out dx, al
 
-    ; 设置loop次数，读多少个扇区要loop多少次
+    ; set loop times，represent sector numbers
     mov cl, bl
 .start_read:
-    push cx     ; 保存loop次数，防止被下面的代码修改破坏
+    push cx     ; save cx
 
     call .wait_hd_prepare
     call read_hd_data
 
-    pop cx      ; 恢复loop次数
+    pop cx      ; recover cx
 
     loop .start_read
 
 .return:
     ret
 
-; 一直等待，直到硬盘的状态是：不繁忙，数据已准备好
-; 即第7位为0，第3位为1，第0位为0
+; Wait until the status of the hard disk is: not busy, data is ready
 .wait_hd_prepare:
     mov dx, 0x1f7
 
@@ -94,7 +93,7 @@ read_hd:
 
     ret
 
-; 读硬盘，一次读两个字节，读256次，刚好读一个扇区
+; Read the hard disk, read two bytes at a time, read 256 times, just read one sector
 read_hd_data:
     mov dx, 0x1f0
     mov cx, 256
@@ -107,9 +106,7 @@ read_hd_data:
 
     ret
 
-; 如何调用
-; mov     si, msg   ; 1 传入字符串
-; call    print     ; 2 调用
+; print function
 print:
     mov ah, 0x0e
     mov bh, 0

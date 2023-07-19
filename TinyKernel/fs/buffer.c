@@ -1,7 +1,3 @@
-//
-// Created by ziya on 23-1-5.
-//
-
 #include "../include/linux/fs.h"
 #include "../include/linux/mm.h"
 #include "../include/linux/task.h"
