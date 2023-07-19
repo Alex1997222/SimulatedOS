@@ -1,7 +1,3 @@
-//
-// Created by ziya on 22-7-15.
-//
-
 #include "../include/stdio.h"
 #include "../include/stdarg.h"
 #include "../include/unistd.h"
